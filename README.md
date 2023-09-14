@@ -1,2 +1,2 @@
-# Notes to be uploaded
+# Statistical computing notes
 
