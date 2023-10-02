@@ -1,10 +1,10 @@
-Rcpp::sourceCpp("~/Course to teach/Computing/Gradient descent linear regression/Linear_gradient_descent.cpp")
-Rcpp::sourceCpp("~/Course to teach/Computing/Gradient descent linear regression/Newton_for_linear.cpp")
+Rcpp::sourceCpp("Linear_gradient_descent.cpp")
+source("linear regression native R.R")
 
 x = rnorm(1000, 0, 1)
 y = 3+2*x + rnorm(1000, 0, 1)
 
 X <- cbind(rep(1, 1000), x)
-betaGD = gradientdescentfit(X, y, 1000, 0.01, 0)
+system.time(betaGD <- gradientdescentfit(X, y, 1000, 0.01, 0))
 
-betaNR = newtonfit(X, y, 1000, 0)
+system.time(betaGDR <- gradientdescentfitR(X, y, 1000, 0.01, 0))
