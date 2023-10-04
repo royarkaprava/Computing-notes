@@ -12,7 +12,7 @@ logisticGDfitR <- function(X, y, Total_itr, L, alpha){
   pvec = 1/(1+exp(Xb));
   
   if( any(Xb > 200)){
-    pvec[which(Xb > 200) ] =0 # Assigning pvec = 0 when Xb > 200 as 1/(1+exp(Xb)) will be very small
+    pvec[which(Xb > 200) ] = 0 # Assigning pvec = 0 when Xb > 200 as 1/(1+exp(Xb)) will be very small
     pvec[which(Xb > 200) ] = pvec[which(Xb > 200) ]+0.0000001; #To avoid singularity log(p)
   }
   
