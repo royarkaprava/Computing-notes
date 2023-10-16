@@ -1,7 +1,6 @@
 ---
 title: "SGD comparisons by Owen (From the class of Fall 2022) (I made some minor adjustments and additions)"
 output: html_document
-date: "2022-11-14"
 ---
 
 ```{r setup, include=FALSE}
