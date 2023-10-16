@@ -3,7 +3,7 @@ source("linear regression native R.R")
 
 x = rnorm(1000, 0, sd=0.1)
 
-y = 3+2*x+ rnorm(1000, 0, 2)
+y = 3+2*x+ rnorm(1000, 0, 1)
 
 X <- cbind(rep(1, 1000), x)
 system.time(betaGD <- gradientdescentfit(X, y, 1000, 0.01, 0))
