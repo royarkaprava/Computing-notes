@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=TRUE}
 #Linear regression case ; Data setup
 set.seed(1000)
-n = 10100; p = 100
+n = 10100; p = 10
 beta_real = rnorm(p, sd=5) 
 x <- matrix(rnorm((n*p), 0, 1), n, p)
 y <- x%*%beta_real + rnorm(n, 0, 1)
@@ -57,11 +57,6 @@ mean((beta_real - beta)^2); plot(Loss[1:i])
 ## SGD with randomized rule
 
 ```{r, echo=TRUE}
-
-set.seed(1000)
-beta = rep(0, p)
-Loss = rep(0, itr)
-
 #Validation set to monitor the loss
 yval <- y[10001:10100]
 xval <- x[10001:10100, ]
@@ -70,6 +65,9 @@ xval <- x[10001:10100, ]
 y <- y[1:10000]
 x <- x[1:10000, ]
 
+set.seed(1000)
+beta = rep(0, itr)#array(betahat)
+Loss = rep(0, itr)
 
 rand = round(runif(1, 1, nrow(x)), 0)
 Loss[1] = sum(abs(yval-xval%*%beta))
@@ -77,7 +75,7 @@ Loss[1] = sum(abs(yval-xval%*%beta))
 stopping = F
 
 for(i in 2:itr){
-  L = 1/i  # notice now this is the step size control.
+  L = 1/(i)  # notice now this is the step size control.
   
   betaOld = beta
   rand = sample(1:nrow(x), 1)
