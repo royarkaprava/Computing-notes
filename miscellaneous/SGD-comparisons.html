@@ -400,11 +400,7 @@ mean((beta_real - beta)^2); plot(Loss[1:i])</code></pre>
 </div>
 <div id="sgd-with-randomized-rule" class="section level2">
 <h2>SGD with randomized rule</h2>
-<pre class="r"><code>set.seed(1000)
-beta = rep(0, p)
-Loss = rep(0, itr)
-
-#Validation set to monitor the loss
+<pre class="r"><code>#Validation set to monitor the loss
 yval &lt;- y[10001:10100]
 xval &lt;- x[10001:10100, ]
 
@@ -412,12 +408,15 @@ xval &lt;- x[10001:10100, ]
 y &lt;- y[1:10000]
 x &lt;- x[1:10000, ]
 
+set.seed(1000)
+beta = rep(0, p)#array(betahat)
+Loss = rep(0, itr)
 
 rand = round(runif(1, 1, nrow(x)), 0)
 Loss[1] = sum(abs(yval-xval%*%beta))
 
 stopping = F
-L0 &lt;- 0.1
+
 for(i in 2:itr){
   L = 1/(i)  # notice now this is the step size control.
   

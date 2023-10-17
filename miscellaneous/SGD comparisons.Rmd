@@ -66,7 +66,7 @@ y <- y[1:10000]
 x <- x[1:10000, ]
 
 set.seed(1000)
-beta = rep(0, itr)#array(betahat)
+beta = rep(0, p)#array(betahat)
 Loss = rep(0, itr)
 
 rand = round(runif(1, 1, nrow(x)), 0)
