@@ -10,12 +10,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=TRUE}
 #Linear regression case ; Data setup
 set.seed(1000)
-n = 10100; p = 10
+n = 10100; p = 100
 beta_real = rnorm(p, sd=5) 
 x <- matrix(rnorm((n*p), 0, 1), n, p)
 y <- x%*%beta_real + rnorm(n, 0, 1)
 
-itr = 10000 ; tol = 1e-3 ; L = 0.1 ; alpha = 0.01 ; gamma = 0.8
+itr = 10000 ; tol = 1e-3 ; L = 0.1 ; alpha = 0.0 ; gamma = 0.8
 
 #LS estimate
 betahat = solve(t(x)%*%x)%*%t(x)%*%y
@@ -108,7 +108,7 @@ beta = rep(0, p)
 Loss = rep(0, itr)
 
 #stochastic gradient descent mini-batch - set of values value.
-b = 10 # mini-batch size!
+b = 2 # mini-batch size!
 
 #get random SET of data and use it to calculate loss.
 ss = round(runif(b, 1, nrow(x)), 0)
