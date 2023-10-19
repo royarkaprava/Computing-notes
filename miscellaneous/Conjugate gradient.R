@@ -37,13 +37,17 @@ X = matrix(rnorm(n*p), n, p)
 beta <- rnorm(p)
 y = X%*%beta + rnorm(n, 0, 1)
 
-A <- crossprod(X)
-b <- crossprod(X, y)
 
+A <- crossprod(X);b <- crossprod(X, y); 
+t1 <- proc.time()
 system.time(x3 <- LinearCGc(A, b, rep(0, p), tol=1e-4))
+t2 <- proc.time()
 mean((x3-beta)^2)
 
-system.time(x2 <- LinearCG(A, b, rep(0, p), tol=1e-4))
+t1 <- proc.time()
+x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
+t2 <- proc.time()
+t2-t1
 plot(x2$alpha)
 mean((x2$sol-beta)^2)
 
