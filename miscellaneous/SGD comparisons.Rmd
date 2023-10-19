@@ -19,6 +19,7 @@ itr = 10000 ; tol = 1e-3 ; L = 0.1 ; alpha = 0.0 ; gamma = 0.8
 
 #LS estimate
 betahat = solve(t(x)%*%x)%*%t(x)%*%y
+mean((beta_real - betahat)^2)
 ```
 
 ## regular gradient descent
@@ -108,7 +109,7 @@ beta = rep(0, p)
 Loss = rep(0, itr)
 
 #stochastic gradient descent mini-batch - set of values value.
-b = 2 # mini-batch size!
+b = 10 # mini-batch size!
 
 #get random SET of data and use it to calculate loss.
 ss = round(runif(b, 1, nrow(x)), 0)
