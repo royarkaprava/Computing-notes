@@ -33,22 +33,25 @@ Rcpp::sourceCpp("Conjugate_gradient.cpp")
 
 p <- 1000
 n <- 1500
-X = matrix(rnorm(n*p), n, p)
+X = matrix(rnorm(n*p, sd=1), n, p)
 beta <- rnorm(p)
 y = X%*%beta + rnorm(n, 0, 1)
 
 
 A <- crossprod(X);b <- crossprod(X, y); 
-t1 <- proc.time()
-system.time(x3 <- LinearCGc(A, b, rep(0, p), tol=1e-4))
-t2 <- proc.time()
-mean((x3-beta)^2)
-
+kappa(A)
 t1 <- proc.time()
 x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
 t2 <- proc.time()
 t2-t1
 plot(x2$alpha)
+
+t1 <- proc.time()
+system.time(x3 <- LinearCGc(A, b, rep(0, p), tol=1e-4))
+t2 <- proc.time()
+mean((x3-beta)^2)
+
+
 mean((x2$sol-beta)^2)
 
 system.time(x1 <- lm(y~X-1)$coefficients)
@@ -56,3 +59,17 @@ mean((x1-beta)^2)
 
 system.time(x0 <- solve(A, b))
 mean((x0-beta)^2)
+
+##########################Case with high condition number###########
+svX = svd(X)
+X <- svX$u %*% diag(1.1^(svX$d)) %*% t(svX$v)
+beta <- rnorm(p)
+y = X%*%beta + rnorm(n, 0, 1)
+A <- crossprod(X);b <- crossprod(X, y); 
+kappa(A)
+
+t1 <- proc.time()
+x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
+t2 <- proc.time()
+t2-t1
+plot(x2$alpha)
