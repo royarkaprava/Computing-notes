@@ -62,15 +62,41 @@ mean((x0-beta)^2)
 
 ##########################Case with high condition number###########
 svX = svd(X)
-X <- svX$u %*% diag(1.05^(svX$d)) %*% t(svX$v)
+X <- svX$u %*% diag(1.1^(svX$d)) %*% t(svX$v)
 beta <- rnorm(p)
 y = X%*%beta + rnorm(n, 0, 1)
 A <- crossprod(X);b <- crossprod(X, y); 
 kappa(A)
-kappa(diag(1/diag(A)^2)%*%A)
+#kappa(diag(1/diag(A)^2)%*%A)
 
 t1 <- proc.time()
 x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
 t2 <- proc.time()
 t2-t1
+plot(x2$alpha, type='l')
+
+
+###############Pre-conditioner############################
+A <- diag(abs(rnorm(1000, mean = 200, sd = 150))) + matrix(rnorm(1000^2, sd=1), 1000, 1000)
+A <- A + t(A)
+
+beta <- rnorm(1000)
+
+b <- A %*% beta
+
+
+kappa(A)
+t1 <- proc.time()
+x2 <- LinearCG(A, b, rep(0, 1000), tol=1e-4)
+t2 <- proc.time()
+t2-t1
 plot(x2$alpha)
+mean((x2$sol-beta)^2)
+
+kappa(diag(1/diag(A))%*%A)
+t1 <- proc.time()
+x3 <- PreLinearCG(1/diag(A),A, b, rep(0, 1000), tol=1e-4)
+t2 <- proc.time()
+t2-t1
+plot(x3$alpha)
+mean((x3$sol-beta)^2)
