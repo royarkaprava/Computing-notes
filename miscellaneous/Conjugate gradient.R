@@ -62,11 +62,12 @@ mean((x0-beta)^2)
 
 ##########################Case with high condition number###########
 svX = svd(X)
-X <- svX$u %*% diag(1.1^(svX$d)) %*% t(svX$v)
+X <- svX$u %*% diag(1.05^(svX$d)) %*% t(svX$v)
 beta <- rnorm(p)
 y = X%*%beta + rnorm(n, 0, 1)
 A <- crossprod(X);b <- crossprod(X, y); 
 kappa(A)
+kappa(diag(1/diag(A)^2)%*%A)
 
 t1 <- proc.time()
 x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
