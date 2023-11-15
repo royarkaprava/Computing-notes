@@ -26,7 +26,7 @@ funf <- function(par){
   
   loss = -sum(log(pvec) * yf + log(1-pvec) * (1-yf))/n;  
   
-  obj = loss + sum(theta * abs(par))
+  obj = loss
   #G_obj = grad_loss + (rho * hval + alpha) * g_hval
   return(obj)
 }
@@ -48,7 +48,7 @@ fungradf <- function(par){
   
   lossder <-  t(Xf) %*% (yf-pvec)/n
   
-  return(lossder +theta*sign(par))
+  return(lossder)
 }
 betaf <- rep(0, p)
 
