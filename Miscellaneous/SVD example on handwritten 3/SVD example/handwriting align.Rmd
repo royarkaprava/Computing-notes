@@ -1,0 +1,69 @@
+---
+title: "SVD Example"
+output:
+  pdf_document: default
+  html_document: default
+date: "2022-08-30"
+---
+
+This example is from my computing course. These are two handwritten 3's. We want to align one 3 on top of the other.
+
+```{r, echo=T}
+X <- read.csv("~/Course to teach/Computing/SVD example/X.txt", header=FALSE)
+
+Y <- read.csv("~/Course to teach/Computing/SVD example/Y.txt", header=FALSE)
+
+X <- as.matrix(X)
+Y <- as.matrix(Y)
+
+plot(X, type='b', col=1, xlim=range(c(X[,1], Y[,1])), ylim=range(c(X[,2], Y[,2])))
+points(Y, type='b', col=2)
+```
+
+We first mean center the two images and visualize.
+
+```{r, echo=T}
+X1 <- X - matrix(colMeans(X), nrow(X), 2, byrow = T)
+Y1 <- Y - matrix(colMeans(Y), nrow(Y), 2, byrow = T)
+
+
+
+plot(X1, type='b', col=1, xlim=range(c(X1[,1], Y1[,1])), ylim=range(c(X1[,2], Y1[,2])))
+points(Y1, type='b', col=2)
+
+```
+
+The difference between images is
+```{r, echo=T}
+sum((X1-Y1)^2)
+
+```
+
+
+We now align the two images on top of the other using SVD and also compute a scalar factor, specifically we solve $\min_{\beta,\mathbf{O}}\|X_1-\beta Y_1\mathbf{O}\|_{F}^2$, where $\mathbf{O}$ is an orthogonal matrix and $\beta$ is a scalar.
+
+```{r, echo=T}
+
+crosscov <- t(X1)%*%Y1
+crosscovSV <- svd(crosscov) #SVD helps o get crosscov = crosscovSV$u%*%diag(crosscovSV$d)%*%t(crosscovSV$v)
+
+O <- crosscovSV$v %*% t(crosscovSV$u)
+
+Y2 <- Y1 %*% O
+
+fit <- lm(array(X1)~array(Y2)-1)
+beta <- fit$coefficients
+
+X1hat <- beta*Y2
+
+plot(X1, type='b', col=1, xlim=range(c(X1[,1], X1hat[,1])), ylim=range(c(X1[,2], X1hat[,2])))
+points(X1hat, type='b', col=2)
+
+```
+
+The difference between images after above transformation is
+```{r, echo=T}
+sum((X1-X1hat)^2)
+```
+
+Note that the error is reduced after the transformation.
