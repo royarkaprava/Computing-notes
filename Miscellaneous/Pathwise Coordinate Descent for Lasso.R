@@ -11,9 +11,9 @@ betalasso_own <- matrix(0, 30, length(Lambda))
 k <- 0
 
 #Since LASSO is applied for high dimensional data, the common initialization technique
-#is usually set to 0 for reducing computational cost in initialization.
-
+#is usually to set all to 0 for reducing computational cost in initialization.
 beta <- betastar <- rep(0, p)
+
 for (lambda in Lambda) {
   # As you can see the solved beta is used as a initializer for next lambda in the list
   # which is smaller than the previous one.
