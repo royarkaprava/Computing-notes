@@ -12,10 +12,13 @@ k <- 0
 
 #Since LASSO is applied for high dimensional data, the common initialization technique
 #is usually to set all to 0 for reducing computational cost in initialization.
+
+#In path LASSO, we initialize beta 'formally' only once.
 beta <- betastar <- rep(0, p)
 
 for (lambda in Lambda) {
-  # As you can see the solved beta is used as a initializer for next lambda in the list
+  # As you can see we do not initialize beta for each lambda.
+  # The optimized beta is used automatically as a initializer for next lambda in the list
   # which is smaller than the previous one.
   
   for(itr in 1:10000){
