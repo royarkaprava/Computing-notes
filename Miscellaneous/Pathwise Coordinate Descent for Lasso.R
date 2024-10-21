@@ -35,7 +35,7 @@ for (lambda in Lambda) {
       }
     }
     ###Stopping rule
-    if(sum(((beta0old-beta)/beta)^2, na.rm = T)<1e-5){
+    if(sum(((beta0old-beta)/beta)^2, na.rm = T)<1e-8){
       break;
     }
   }
@@ -55,4 +55,4 @@ betalasso <- as.matrix(fit$beta)
 colnames(betalasso) <- colnames(betalasso_own) <- Lambda
 
 ###Checking closeness between our own implementation and glmnet
-range(betaM-betalasso)
+range(betalasso_own-betalasso)
