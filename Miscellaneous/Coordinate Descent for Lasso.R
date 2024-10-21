@@ -27,6 +27,7 @@ beta <- betastar <- rep(0, p)
       }else{
         beta[i] = betastar[i] + 1/crossprod(X[,i])*N*lambda/2
       }
+      
     }
     ###Stopping rule
     if(sum(((beta0old-beta)/beta)^2, na.rm = T)<1e-5){
