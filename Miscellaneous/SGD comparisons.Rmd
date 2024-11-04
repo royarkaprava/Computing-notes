@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=TRUE}
 #Linear regression case ; Data setup
 set.seed(1000)
-n = 10100; p = 100
+n = 10100; p = 50
 beta_real = rnorm(p, sd=5) 
 x <- matrix(rnorm((n*p), 0, 1), n, p)
 y <- x%*%beta_real + rnorm(n, 0, 1)
