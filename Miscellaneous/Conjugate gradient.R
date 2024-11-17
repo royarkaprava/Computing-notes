@@ -29,7 +29,7 @@ LinearCG <- function(A, b, x0, tol=1e-5){
   
   return(list(sol=xk, alpha=alphadkvec))
 }
-Rcpp::sourceCpp("Conjugate_gradient.cpp")
+#Rcpp::sourceCpp("Conjugate_gradient.cpp")
 
 p <- 1000
 n <- 1500
@@ -45,6 +45,8 @@ x2 <- LinearCG(A, b, rep(0, p), tol=1e-4)
 t2 <- proc.time()
 t2-t1
 plot(x2$alpha)
+
+sum((A%*%x2$sol-b)^2)
 
 t1 <- proc.time()
 system.time(x3 <- LinearCGc(A, b, rep(0, p), tol=1e-4))
