@@ -15,7 +15,7 @@ gradientdescentfitR <- function(X, y, Total_itr, L, alpha,
             length(Total_itr) == 1, is.finite(Total_itr),
             Total_itr >= 1, Total_itr == floor(Total_itr),
             length(L) == 1, is.finite(L), L > 0,
-            length(alpha) == 1, is.finite(alpha), alpha > 0, alpha < 1,
+            length(alpha) == 1, is.finite(alpha), alpha >= 0, alpha < 1,
             length(link_sign) == 1, link_sign %in% c(-1, 1),
             length(tol) == 1, is.finite(tol), tol > 0);
 
